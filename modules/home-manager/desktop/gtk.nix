@@ -13,12 +13,7 @@ lib.mkIf nixosConfig.usrEnv.desktop.enable {
     enable = true;
     theme = {
       name = "Plata-Noir-Compact";
-      package = pkgs.plata-theme.override {
-        selectionColor = "#${colors.base01}";
-        accentColor = "#${colors.base02}";
-        suggestionColor = "#${colors.base0D}";
-        destructionColor = "#${colors.base08}";
-      };
+      package = pkgs.plata-theme;
     };
     iconTheme = {
       name = "Papirus-Dark";
