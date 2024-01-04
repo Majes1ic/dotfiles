@@ -1,5 +1,5 @@
 {
-  description = "Joshua's NixOS Flake";
+  description = "Tom's NixOS Flake";
 
   inputs = {
     # NOTE: Use the `nix flake metadata <flake_url>` command to check if a
@@ -8,10 +8,10 @@
     nix-colors.url = "github:misterio77/nix-colors";
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-resources = {
-      url = "git+ssh://git@github.com/JManch/nix-resources";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-resources = {
+    #   url = "git+ssh://git@github.com/JManch/nix-resources";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     anyrun = {
       url = "github:Kirottu/anyrun";
@@ -49,7 +49,7 @@
     let
       inherit (self) outputs;
       systems = [ "x86_64-linux" ];
-      username = "joshua";
+      username = "tom";
 
       mkLib = nixpkgs:
         nixpkgs.lib.extend
@@ -65,15 +65,15 @@
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
-        ncase-m1 = nixpkgs.lib.nixosSystem {
+        maximum = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            hostname = "ncase-m1";
+            hostname = "maximum";
             inherit inputs outputs username lib;
           };
           modules = [
             ./modules/nixos
-            ./hosts/ncase-m1
+            ./hosts/maximum
           ];
         };
 

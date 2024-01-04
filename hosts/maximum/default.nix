@@ -5,33 +5,17 @@
 
   device = {
     type = "desktop";
-    cpu = "amd";
-    gpu = "nvidia";
+    cpu = "vm-intel";
+    gpu = null;
     monitors = [
       {
-        name = "DP-2";
+        name = "DP-1";
         number = 1;
-        refreshRate = 120.0;
-        width = 2560;
-        height = 1440;
-        position = "2560x0";
-        workspaces = [ 1 3 5 7 9 ];
-      }
-      {
-        name = "HDMI-A-1";
-        number = 2;
-        refreshRate = 59.951;
+        refreshRate = 60.0;
         width = 2560;
         height = 1440;
         position = "0x0";
-        workspaces = [ 2 4 6 8 ];
-      }
-      {
-        name = "DP-3";
-        number = 3;
-        width = 2560;
-        height = 1440;
-        enabled = false;
+        workspaces = [ 1 2 3 4 5 6 7 8 9 ];
       }
     ];
   };
@@ -48,7 +32,7 @@
     hardware = {
       fileSystem = {
         trim = true;
-        rootTmpfsSize = "2G";
+        rootTmpfsSize = "1G";
         zpoolName = "zpool";
         bootLabel = "boot";
       };
@@ -56,20 +40,20 @@
 
     programs = {
       wine.enable = false;
-      winbox.enable = true;
-      steam.enable = true;
+      winbox.enable = false;
+      steam.enable = false;
     };
 
     services = {
       greetd = {
-        enable = true;
+        enable = false;
         launchCmd = "Hyprland";
       };
-      syncthing.enable = true;
+      syncthing.enable = false;
     };
 
     system = {
-      windowsBootEntry.enable = true;
+      windowsBootEntry.enable = false;
       networking = {
         tcpOptimisations = true;
         firewall.enable = true;
@@ -77,9 +61,9 @@
       };
       audio = {
         enable = true;
-        extraAudioTools = true;
+        extraAudioTools = false;
       };
-      virtualisation.enable = true;
+      virtualisation.enable = false;
     };
   };
 

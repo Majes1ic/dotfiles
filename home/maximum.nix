@@ -20,8 +20,8 @@
 
       style = {
         font = {
-          family = "BerkeleyMono Nerd Font";
-          package = inputs.nix-resources.packages.${pkgs.system}.berkeley-mono-nerdfont;
+          family = "FiraCode Nerd Font";
+          package = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
         };
         cursorSize = 24;
         cornerRadius = 10;
@@ -30,19 +30,11 @@
       };
 
       swaylock = {
-        enable = true;
-        lockScript = lib.mkIf (config.modules.desktop.windowManager == "hyprland") ''
-          # Temporarily disable shader for screenshot
-          COMMAND="${config.wayland.windowManager.hyprland.package}/bin/hyprctl keyword decoration:screen_shader ${config.xdg.configHome}/hypr/shaders/"
-          ''${COMMAND}blank.frag > /dev/null 2>&1
-          ${config.programs.swaylock.package}/bin/swaylock -f
-          ${pkgs.coreutils}/bin/sleep 0.05
-          ''${COMMAND}monitor1_gamma.frag > /dev/null 2>&1
-        '';
+        enable = false;
       };
 
       swayidle = {
-        enable = true;
+        enable = false;
         lockTime = 3 * 60;
         lockedScreenOffTime = 2 * 60;
       };
