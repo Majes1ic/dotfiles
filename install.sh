@@ -6,10 +6,6 @@ if ! command -v git &> /dev/null
 then
     echo "git could not be found. Run inside 'nix-shell -p git bitwarden-cli' shell"
     exit 1
-elif ! command -v bw &> /dev/null
-then
-    echo "bw could not be found. Run inside 'nix-shell -p git bitwarden-cli' shell"
-    exit 1
 fi
 
 # Disk prompt
@@ -100,25 +96,7 @@ mount -t zfs ${ZPOOL}/nix /mnt/nix
 mount -t zfs ${ZPOOL}/persist /mnt/persist
 mount -o umask=0077 /dev/disk/by-label/${BOOTLABEL} /mnt/boot
 
-# Setup keys
-printf "\n === Key Setup === \n"
-mkdir -p /mnt/persist/etc/ssh
-set +e
-while true; do
-    read -p "Enter bitwarden url code: " -r CODE
-    OUTPUT=$(bw receive https://send.bitwarden.com/$CODE --output /mnt/persist/etc/ssh/ssh_host_ed25519_key)
-    if [ "${OUTPUT:0:5}" == "Saved" ]; then break; fi
-done
-set -e
-chmod 600 /mnt/persist/etc/ssh/ssh_host_ed25519_key
-cp "$(dirname "$0")/hosts/$HOST/ssh_host_ed25519_key.pub" /mnt/persist/etc/ssh
-
-# Copy to home ssh dir for initial clone of private flakes
-mkdir ~/.ssh
-cp /mnt/persist/etc/ssh/ssh_host_ed25519_key.pub ~/.ssh/id_ed25519.pub
-cp /mnt/persist/etc/ssh/ssh_host_ed25519_key ~/.ssh/id_ed25519
-
 # Install
 mkdir -p /mnt/etc/nixos
-git clone https://github.com/JManch/dotfiles /mnt/etc/nixos
+git clone https://github.com/Majes1ic/dotfiles /mnt/etc/nixos
 nixos-install --no-root-passwd --flake /mnt/etc/nixos#$HOST
